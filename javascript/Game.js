@@ -2,7 +2,6 @@ class Game {
     constructor() {
         this.play = false;
         this.end = false;
-        this.lost = false;
         this.won = false;
         this.time = 0;
     }
@@ -22,6 +21,7 @@ class Game {
         }
     }
     countTime() {
+        this.time = 1;
         let inter = setInterval(()=>{
             if (this.end) {
                 clearInterval(inter);
@@ -32,10 +32,10 @@ class Game {
     }
     lose() {
         this.end = true;
-        this.lost = true;
+        this.won = false;
         ctx.font = "25px serif";
         ctx.fillStyle = "#fff";
-        ctx.fillText("better luck next time", (canvas.width / 5), (canvas.height / 2) - 10);
+        ctx.fillText("nice try :)", (canvas.width / 5), (canvas.height / 2) - 10);
         ctx.font = "15px serif";
         ctx.fillText("press \"space\" to restart", (canvas.width / 5), (canvas.height / 2) + 10);
         ctx.fill();
@@ -46,6 +46,7 @@ class Game {
             ball.reset({x: (canvas.width / 2) - (10 / 2), y: 440}, "#fff", 10); // pos, color, height
             this.end = false;
             game.play = true;
+            this.countTime();
         }
     }
     win() {
@@ -64,6 +65,7 @@ class Game {
             ball.reset({x: (canvas.width / 2) - (10 / 2), y: 440}, "#fff", 10); // pos, color, height
             this.end = false;
             game.play = true;
+            this.countTime();
         }
     }
 }

@@ -38,9 +38,9 @@ class Player {
         this.velocity.x *= this.friction;
         this.pos.add(this.velocity);
         if (keys[39]) {
-            this.velocity.x += 0.3;
+            this.velocity.x += 0.015 * deltaTime;
         } if (keys[37]) {
-            this.velocity.x -= 0.3;
+            this.velocity.x -= 0.015 * deltaTime;
         }
     }
     collision() {

@@ -20,8 +20,11 @@ class Ball {
         this.velocity.y = -2.3;
     }
     draw() {
+        ctx.beginPath();
+        ctx.arc(this.pos.x + this.height/2, this.pos.y + this.height/2, this.height / 2, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.pos.x, this.pos.y, this.height, this.height);
+        ctx.fill();
+        ctx.closePath();
     }
     update() {
         this.draw();
@@ -70,16 +73,21 @@ class Ball {
                 this.velocity.invertX();
             }
             if (dir) {
-                this.color = el.color;
                 if (el.hp != undefined) {
                     el.loseHealth(1);
                 } else {
-                    this.velocity.x += player.velocity.x / 2.5;
+                    this.velocity.x += player.velocity.x / 35 * deltaTime;
                 }
             }
         }
     }
     updatePosition() {
+        if (this.velocity.x > 5 || this.velocity.x < -5) {
+            this.velocity.x = 5
+        }
+        if (this.velocity.y > 5 || this.velocity.y < -5) {
+            this.velocity.x = 5
+        }        
         this.pos.add(this.velocity);
     }
     collisionCheck (el) {
@@ -88,7 +96,7 @@ class Ball {
         let vY = (this.pos.y + (this.height / 2)) - (el.pos.y + (el.height / 2));
         let halfWidth = (this.width / 2) + (el.width / 2);
         let halfHeight = (this.height / 2) + (el.height / 2);
-        if (Math.abs(vX) < halfWidth && Math.abs(vY) < halfHeight) {
+        if (Math.abs(vX) < halfWidth  + 0.1 && Math.abs(vY) < halfHeight + 0.1) {
             let oX = halfWidth - Math.abs(vX);
             let oY = halfHeight - Math.abs(vY);
             if (oX >= oY) {
